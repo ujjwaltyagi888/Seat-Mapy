@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1085488718589",
+    "firebase_url": "https://seat-mapy-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "seat-mapy",
+    "storage_bucket": "seat-mapy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085488718589:android:d116e082e3cbc91eb5d494",
+        "android_client_info": {
+          "package_name": "com.conquistador.seatmapy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085488718589-l596jup9s3e4a174loim1eh2r8vkij4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU3Wm8ZVA7UxqV7tNmEMEyCj-PvzX0TKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085488718589-l596jup9s3e4a174loim1eh2r8vkij4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
