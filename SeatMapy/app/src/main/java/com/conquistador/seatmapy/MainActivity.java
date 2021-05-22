@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -37,9 +38,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 String key = "seat";
-                List<Integer> list = new ArrayList<>();
+                List<Pair<Integer, String>> list = new ArrayList<>();
                 for (int i = 1; i <= 6; i++) {
-                    list.add(Integer.parseInt(snapshot.child(key + " " + i).getValue().toString()));
+                    int status = Integer.parseInt(snapshot.child(key + " " + i).child("status").getValue().toString());
+
+                    Object obj_start_time = snapshot.child(key + " " + i).child("start_time").getValue();
+                    Object obj_stop_time = snapshot.child(key + " " + i).child("stop_time").getValue();
+                    String durationText;
+
+                    if (obj_start_time != null && obj_stop_time != null) {
+                        long start_time = Long.parseLong(obj_start_time.toString());
+                        long stop_time = Long.parseLong(obj_stop_time.toString());
+
+                        if (start_time == -1 && stop_time != -1) {
+                            durationText = "UNOCCUPIED";
+                        } else if (start_time != -1 && stop_time != -1) {
+                            durationText = getDuration(stop_time - start_time);
+                        } else {
+                            durationText = "N/A";
+                        }
+                    } else {
+                        durationText = "N/A";
+                    }
+
+                    list.add(new Pair<>(status, durationText));
                 }
 
                 seatView.setHasFixedSize(true);
@@ -54,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
         };
 
         ref.addValueEventListener(databaseListener);
+    }
+
+    private String getDuration(long duration) {
+        String out = "";
+
+        duration /= 1000;   // seconds
+        if (duration >= 60) {
+            int minutes = (int) duration / 60;
+            out += minutes + " min(s)";
+            out += " " + (duration % 60) + " sec";
+        } else {
+            out += duration + " seconds";
+        }
+
+        return out;
     }
 
     @Override

@@ -29,13 +29,30 @@ io.on('connection', (socket) => {
 });
 
 var dbRef = admin.database().ref("Seats").child("Bus");
-
 const sensorData = [0, 0, 0, 0, 0, 0];
+
+for (let i = 0; i < sensorData.length; i++) {
+    dbRef.child(`seat ${i + 1}`).child("status").on('value', snapshot => {
+        if (snapshot.val() === 1) {
+            dbRef.child(`seat ${i + 1}`).update({
+                start_time: Date.now()
+            });
+        }
+        if (snapshot.val() === 0) {
+            dbRef.child(`seat ${i + 1}`).update({
+                stop_time: Date.now()
+            });
+        }
+    });
+}
+
 setInterval(() => {
     readData().then(() => {
         io.emit('data', sensorData);
         for (let i = 0; i < sensorData.length; i++) {
-            dbRef.child(`seat ${i + 1}`).set(sensorData[i]);
+            dbRef.child(`seat ${i + 1}`).update({
+                status: sensorData[i]
+            });
         }
     });
 }, 1000);

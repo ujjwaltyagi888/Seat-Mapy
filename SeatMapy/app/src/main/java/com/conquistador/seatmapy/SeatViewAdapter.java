@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,9 +15,9 @@ import java.util.List;
 
 public class SeatViewAdapter extends RecyclerView.Adapter<SeatViewHolder> {
 
-    List<Integer> seats;
+    List<Pair<Integer, String>> seats;
 
-    public SeatViewAdapter(List<Integer> seats) {
+    public SeatViewAdapter(List<Pair<Integer, String>> seats) {
         this.seats = seats;
     }
 
@@ -29,11 +30,12 @@ public class SeatViewAdapter extends RecyclerView.Adapter<SeatViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull SeatViewHolder holder, int position) {
-        int occupied = seats.get(position);
-        if (occupied == 1) {
+        Pair<Integer, String> seatData = seats.get(position);
+        if (seatData.first == 1) {
             holder.seatImage.setImageTintList(ColorStateList.valueOf(Color.RED));
         } else {
             holder.seatImage.setImageTintList(ColorStateList.valueOf(Color.GREEN));
+            holder.seatStatus.setText(seatData.second);
         }
     }
 
