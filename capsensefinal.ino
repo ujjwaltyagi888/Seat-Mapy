@@ -6,7 +6,7 @@ CapacitiveSensor cs_6_7 = CapacitiveSensor(6,7);
 CapacitiveSensor cs_A0_A1 = CapacitiveSensor(A0,A1);
 CapacitiveSensor cs_A2_A3 = CapacitiveSensor(A2,A3);
 CapacitiveSensor cs_A4_A5 = CapacitiveSensor(A4,A5);
-
+int n=250;
 int latchPin = 11; // connect to the ST_CP of 74HC595 (pin 3,latch pin)
 int clockPin = 9;  // connect to the SH_CP of 74HC595 (pin 4, clock pin)
 int dataPin = 12;  // connect to the DS of 74HC595 (pin 2)
@@ -96,10 +96,10 @@ void sevenSegBlank(){
 void loop()                    
 {
     bAddDecimalPoint = !bAddDecimalPoint;   
-int i=0;
+    int i=0;
     long total1 =  cs_2_3.capacitiveSensor(30);
     
-    if (total1 > 10){{yes = true;}
+    if (total1 > n){{yes = true;}
     
     Serial.print("OCCUPIED;");
    
@@ -112,7 +112,7 @@ int i=0;
  //////////////////////////////////////////   
 long total2 =  cs_4_5.capacitiveSensor(30);
     
-    if (total2 > 10){{yes = true;}
+    if (total2 > n){{yes = true;}
     
     Serial.print("OCCUPIED;");
 
@@ -125,7 +125,7 @@ long total2 =  cs_4_5.capacitiveSensor(30);
  ///////////////////////////////////////////   
 long total3 =  cs_6_7.capacitiveSensor(30);
     
-    if (total3 > 10){{yes = true;}
+    if (total3 > n){{yes = true;}
     
     Serial.print("OCCUPIED;");
   
@@ -139,7 +139,7 @@ long total3 =  cs_6_7.capacitiveSensor(30);
 
 long total4 =  cs_A0_A1.capacitiveSensor(30);
     
-    if (total4 > 10){{yes = true;}
+    if (total4 > n){{yes = true;}
     
     Serial.print("OCCUPIED;");
  
@@ -152,7 +152,7 @@ long total4 =  cs_A0_A1.capacitiveSensor(30);
 //////////////////////////////////////////
 long total5 =  cs_A2_A3.capacitiveSensor(30);
     
-    if (total5 > 10){{yes = true;}
+    if (total5 > 400){{yes = true;}
     
     Serial.print("OCCUPIED;");
     
@@ -166,19 +166,19 @@ long total5 =  cs_A2_A3.capacitiveSensor(30);
  ///////////////////////////////////////
  long total6 =  cs_A4_A5.capacitiveSensor(30);
     
-    if (total6 > 10){{yes = true;}
+    if (total6 > n){{yes = true;}
     
-    Serial.print("OCCUPIED");
+    Serial.println("OCCUPIED");
     delay(100);
     }
     else {{yes = false;}
    
     Serial.println("UNOCCUPIED");
     i=i+1;
-    delay(100);}
+    delay(500);}
   bAddDecimalPoint = !bAddDecimalPoint;   
   sevenSegWrite(i, bAddDecimalPoint);
-  delay(100);
+  delay(500);
    }    
 
 
